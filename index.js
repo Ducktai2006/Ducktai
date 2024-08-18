@@ -27,17 +27,26 @@ const intervalId = setInterval(() => {
   progress++;
 }, 300);
 
-function runCustomCode() {
 const chalk2 = require('chalk');
-const chalk = require('chalkercli');
+const chalk = require("chalkercli");
 const axios = require('axios');
 const fs = require('fs');
 const { exec } = require('child_process');
 const { spawn } = require('child_process');
-const appStateFilePath = 'appstate.json';
 const gradient = require('gradient-string');
-
-const loginFilePath = 'login.js';
+const { readFileSync } = require("fs-extra");
+const http = require("http");
+const semver = require("semver");
+const path = require("path");
+const logger = require("./utils/log");
+const chalk1 = require("chalk");
+const geoip = require("geoip-lite");
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const useragent = require("express-useragent");
+const requestIp = require("request-ip");
+const os = require("os");
 
 axios.get("https://raw.githubusercontent.com/nguyenductai206/nguyenductai206/main/package.json").then((res) => {
     console.log(chalk2.bgRed.white.bold( "『 NAME 』» ", res['data']['name']));
@@ -110,33 +119,6 @@ if (packageJson.dependencies) {
 }
 });
 
-fs.readFile(appStateFilePath, 'utf8', (err, data) => {
-  if (err) {
-    console.error(`Lỗi đọc tệp ${appStateFilePath}: ${err}`);
-    return;
-  }
-
-  try {
-    JSON.parse(data);
-    //chạy index 
-const { spawn } = require("child_process");
-const { readFileSync } = require("fs-extra");
-const http = require("http");
-const axios = require("axios");
-const semver = require("semver");
-const path = require("path");
-const logger = require("./utils/log");
-const chalk1 = require("chalk");
-const chalk = require("chalkercli");
-const geoip = require("geoip-lite");
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const useragent = require("express-useragent");
-const requestIp = require("request-ip");
-const api = require("./scr_api/routes/api");
-const os = require("os");
-
     var mautim = ["#FF33FF"];
 var job = ["FF9900", "FFFF33", "33FFFF", "FF99FF", "FF3366", "FFFF66", "FF00FF", "66FF99", "00CCFF", "FF0099", "FF0066", "0033FF", "FF9999", "00FF66", "00FFFF","CCFFFF","8F00FF","FF00CC","FF0000","FF1100","FF3300","FF4400","FF5500","FF6600","FF7700","FF8800","FF9900","FFaa00","FFbb00","FFcc00","FFdd00","FFee00","FFff00","FFee00","FFdd00","FFcc00","FFbb00","FFaa00","FF9900","FF8800","FF7700","FF6600","FF5500","FF4400","FF3300","FF2200","FF1100"];
     var random = 
@@ -152,7 +134,7 @@ const memoryUsage = (totalMemory - freeMemory) * 100 / totalMemory;
 const diskUsage = fs.statSync('/').size;
 const diskTotal = fs.statSync('/').blocks * fs.statSync('/').blksize;
 const diskUsagePercentage = (diskUsage / diskTotal) * 100;
-    
+
 var mau = ["#0000FF","#00FF00","#00FFFF"];
 var dtai = mau[Math.floor(Math.random() * mau.length)];
     const item = [
@@ -208,27 +190,3 @@ function startBot(message) {
 console.table(item);
     }, 3000)
 startBot();
-        //end index //
-  } catch (error) {
-    console.error(`[ ERROR ] -> ${appStateFilePath} đã bị lỗi!\nLỗi là: ${error}\n[ GET APPSTATE ] -> Hệ thống đang tiến hành lấy ${appStateFilePath} mới!\n`);
-
-    function startLogin() {
-      const child = spawn("node", ["login.js"], {
-  cwd: __dirname ,
-  stdio: "inherit",
-  shell: true
-});
-
-      child.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-      });
-
-      child.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-      });
-    }
-
-    startLogin();
-  }
-});
-}
