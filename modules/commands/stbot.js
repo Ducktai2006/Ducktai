@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 module.exports.config = {
-  name: "stbot",
+  name: "setting",
   version: "0.0.1",
   hasPermssion: 1,
   credits: "Adonis",

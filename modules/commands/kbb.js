@@ -11,8 +11,8 @@ module.exports.config = {
 module.exports.run = async function({ api, event, args, Users, Currencies }) {
     const { threadID, messageID, senderID } = event;
     const money = (await Currencies.getData(senderID)).money;
-    const fs = global.nodemodule["fs-extra"];
-    const axios = global.nodemodule["axios"];
+    const fs = require("fs-extra");
+    const axios = require("axios");
 
     const listIMG = ['https://i.imgur.com/1uBAGlO.jpg', 'https://i.imgur.com/EOZx1tL.jpg', 'https://i.imgur.com/2WSbVaK.jpg'];
     const listItem = ['kéo', 'búa', 'bao'];

@@ -18,8 +18,8 @@ module.exports.onLoad = o => {
     const hour = m.format("HH");
     if ((dtaicute === `${hour}:00:00` || dtaicute === `${hour}:30:00`) && (hour >= "00" && hour <= "24")) {
       const time = process.uptime();
-      const apiUrl = "https://ducktai.onrender.com/girl";
-      const dtaicutevc = ["1", "2", "3", "4", "6", "9", "12"];
+      const apiUrl = "http://localhost:8300/girl";
+      const dtaicutevc = ["1", "2", "3", "4"];
       const array = [];
 
       const randomIndex = Math.floor(Math.random() * dtaicutevc.length);

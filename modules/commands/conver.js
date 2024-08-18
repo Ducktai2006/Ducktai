@@ -30,7 +30,7 @@ module.exports.handleEvent = async function ({ api, event, threads }) {
 
   const { body } = event;
 
-  if (body.toLowerCase() == "mp3") {
+  if (body.toLowerCase() == "Mp3") {
     await getAttachments();
     api.sendMessage({ body: "Đã chuyển đổi video thành âm thanh", attachment: audioss }, threadID, messageID);
   }

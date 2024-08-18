@@ -24,7 +24,7 @@ module.exports.handleEvent = async function ({ api, event }) {
 
     for (const link of links) {
         try {
-            const res = await axios.get(`https://ducktai.onrender.com/capcut?url=${link}`);
+            const res = await axios.get(`http://localhost:8300/capcut?url=${link}`);
             const { title, description, usage, video } = res.data;
 
             await api.sendMessage({

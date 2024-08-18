@@ -90,8 +90,8 @@ Phiên bản Node: ${process.version},
 Phiên bản hệ điều hành: ${osInfo.release}
     ` ;
     const { body } = event;
-      if (body.toLowerCase() == "Upt" ||
-          (body.toLowerCase() == "upt")) {
+      if (body.toLowerCase() == "Uptime" ||
+          (body.toLowerCase() == "uptime")) {
        api.sendMessage(ifmb, event.threadID, event.messageID);
     };
   } catch (error) {

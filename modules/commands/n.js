@@ -16,7 +16,7 @@ module.exports.run = async function ({ api, event, args, client, Users, Threads,
   const axios = require('axios');
   const moment = require("moment-timezone");
   const apiUrl = "http://localhost:8300/haugai";
-  const dtaicutevc = ["1", "2", "3", "4", "6", "9", "12", "15", "18", "21", "24", "27"];
+  const dtaicutevc = ["1", "2", "3", "4"];
   const array = [];
 
   const randomIndex = Math.floor(Math.random() * dtaicutevc.length);
@@ -44,7 +44,7 @@ module.exports.run = async function ({ api, event, args, client, Users, Threads,
   var tai = event.senderID;
 
   api.sendMessage({
-    body: `Xin chào! Tôi là bot, dự án robot miễn phí của NGUYỄN ĐỨC TÀI - MITAI PROJECT. Bạn cần giúp gì?\n\nTime run - ${anh} : ${la} : ${dtai}`, attachment: array
+    body: `Xin chào! Tôi là bot, dự án robot miễn phí của NGUYỄN ĐỨC TÀI - MITAI PROJECT. Bạn cần giúp gì?\n\nTime run: ${anh} : ${la} : ${dtai}`, attachment: array
   }, event.threadID, (err, info) => {
     global.client.handleReaction.push({
       name: this.config.name,
