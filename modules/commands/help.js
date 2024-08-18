@@ -1,86 +1,104 @@
-module.exports.config = {
+this.config = {
     name: "help",
-    version: "1.0.0",
+    version: "1.1.1",
     hasPermssion: 0,
-    credits: "Mirai Team",
-    description: "Hướng dẫn cho người mới",
-    commandCategory: "tiện ích",
-    usages: "[Tên module]",
-    cooldowns: 5,
-    envConfig: {
-        autoUnsend: true,
-        delayUnsend: 60
-    }
+    credits: "DC-Nam mod by Niio-team",
+    description: "Xem danh sách lệnh và info",
+    commandCategory: "Nhóm",
+    usages: "[tên lệnh/all]",
+    cooldowns: 0
 };
-
-module.exports.run = function({ api, event, args }) {
-    try {
-    const { commands } = global.client;
-    const { threadID, messageID } = event;
-    const command = commands.get((args[0] || "").toLowerCase());
-    const threadSetting = global.data.threadData.get(parseInt(threadID)) || {};
-    const { autoUnsend, delayUnsend } = global.configModule[this.config.name];
-    const prefix = (threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : global.config.PREFIX;
-
-    if (args[0] == "all") {
-        const command = commands.values();
-        var group = [], msg = "";
-        for (const commandConfig of command) {
-            if (!group.some(item => item.group.toLowerCase() == commandConfig.config.commandCategory.toLowerCase())) group.push({ group: commandConfig.config.commandCategory.toLowerCase(), cmds: [commandConfig.config.name] });
-            else group.find(item => item.group.toLowerCase() == commandConfig.config.commandCategory.toLowerCase()).cmds.push(commandConfig.config.name);
-        }
-        group.forEach(commandGroup => msg += `『🧸』 ${commandGroup.group.charAt(0).toUpperCase() + commandGroup.group.slice(1)}\n${commandGroup.cmds.join(', ')}\n\n`);
-        return api.sendMessage(`=== 『𝐋𝐈𝐒𝐓 𝐂𝐎𝐌𝐌𝐀𝐍𝐃』 ===\n` + msg + `\n🗂𝐒𝐨̂́ 𝐥𝐞̣̂𝐧𝐡 𝐡𝐢𝐞̣̂𝐧 𝐜𝐨́:${commands.size}\n📃𝐇𝐃𝐒𝐃 𝐡𝐞𝐥𝐩 𝐬𝐨̂́ 𝐭𝐫𝐚𝐧𝐠 𝐦𝐮𝐨̂́𝐧 𝐱𝐞𝐦 𝐡𝐨𝐚̣̆𝐜 𝐡𝐞𝐥𝐩𝐚𝐥𝐥 𝐝𝐞̂̉ 𝐱𝐞𝐦 𝐭𝐨𝐚̀𝐧 𝐛𝐨̣̂ 𝐥𝐞̣̂𝐧𝐡\n❌𝐍𝐠𝐡𝐢𝐞̂𝐦 𝐜𝐚̂́𝐦 𝐤𝐡𝐨̂𝐧𝐠 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐥𝐞̣̂𝐧𝐡 𝐭𝐡𝐮𝐨̣̂𝐜 𝐀𝐃𝐌𝐈𝐍 𝐁𝐎𝐓\n❗️𝐊𝐡𝐢 𝐛𝐚̣𝐧 𝐭𝐡𝐚̉ "😠" 𝐁𝐨𝐭 𝐬𝐞̃ 𝐭𝐮̛̣ 𝐭𝐡𝐮 𝐡𝐨̂̀𝐢`, threadID, async (error, info) =>{
-            if (autoUnsend) {
-                await new Promise(resolve => setTimeout(resolve, delayUnsend * 1000));
-                return api.unsendMessage(info.messageID);
-            } else return;
-        });
-    }
-if (!command) {
-    const commandsPush = [];
-    const page = parseInt(args[0]) || 1;
-    const pageView = 20;
-    let i = 0;
-    let msg = "=== 『𝐋𝐈𝐒𝐓 𝐂𝐎𝐌𝐌𝐀𝐍𝐃』 ===\n";
-
-    for (var [name, value] of (commands)) {
-        name += `
-『💓』:${value.config.description}
-⏰𝐓𝐡𝐨̛̀𝐢 𝐠𝐢𝐚𝐧 𝐜𝐡𝐨̛̀: ${command.config.cooldowns}s
-🪪𝐐𝐮𝐲𝐞̂̀𝐧 𝐡𝐚̣𝐧: ${((command.config.hasPermssion == 0) ? `Người dùng` : (command.config.hasPermssion == 1) ? `Quản trị viên nhóm` : `ADMIN BOT`)}\n`;
-        commandsPush.push(name);
-    }
-
-    commandsPush.sort((a, b) => a.data - b.data);
-
-    const first = pageView * page - pageView;
-    i = first;
-    const helpView = commandsPush.slice(first, first + pageView);
-
-    for (let cmds of helpView)
-        msg += `『🧸』: ${cmds}\n`;
-    const cmdsView = `
-🗃𝐓𝐫𝐚𝐧𝐠: ${page}|${Math.ceil(commandsPush.length/pageView)}
-🗂𝐓𝐨̂̉𝐧𝐠 𝐥𝐞̣̂𝐧𝐡 𝐜𝐨́ 𝐭𝐡𝐞̂̉ 𝐝𝐮̀𝐧𝐠 𝐥𝐚̀ :${commandsPush.length}
-📃𝐇𝐃𝐒𝐃 𝐡𝐞𝐥𝐩 𝐬𝐨̂́ 𝐭𝐫𝐚𝐧𝐠 𝐦𝐮𝐨̂́𝐧 𝐱𝐞𝐦 𝐡𝐨𝐚̣̆𝐜 𝐡𝐞𝐥𝐩𝐚𝐥𝐥 𝐝𝐞̂̉ 𝐱𝐞𝐦 𝐭𝐨𝐚̀𝐧 𝐛𝐨̣̂ 𝐥𝐞̣̂𝐧𝐡`;
-    return api.sendMessage(msg + cmdsView, threadID,
-        async (error, info) => {
-            if(error) return console.log(error)
-            if (autoUnsend) {
-                await new Promise(resolve =>
-                    setTimeout(resolve, delayUnsend * 1000));
-                return api.unsendMessage(info.messageID);
-            } else return;
-        });
+this.languages = {
+    "vi": {},
+    "en": {}
 }
-return api.sendMessage(` 
-💾𝐋𝐞̣̂𝐧𝐡: ${command.config.name}
-\n📋𝐓𝐡𝐨̂𝐧𝐠 𝐭𝐢𝐧 𝐥𝐞̣̂𝐧𝐡: ${command.config.description}
-\n📃𝐂𝐚́𝐜𝐡 𝐬𝐮̛̉ 𝐝𝐮̣𝐧𝐠 𝐥𝐞̣̂𝐧𝐡: ${prefix}${command.config.name} ${(command.config.usages) ? command.config.usages : "𝐂𝐡𝐮̛𝐚 𝐮𝐩𝐝𝐚𝐭𝐞 𝐡𝐨𝐚̣̆𝐜 𝐜𝐡𝐮̛𝐚 𝐜𝐨́ 𝐡𝐮̛𝐨̛́𝐧𝐠 𝐝𝐚̂̃𝐧 𝐜𝐮̣ 𝐭𝐡𝐞̂̉ 𝐭𝐮̛̀ 𝐚𝐝𝐦𝐢𝐧"}
-\n⏰𝐓𝐡𝐨̛̀𝐢 𝐠𝐢𝐚𝐧 𝐜𝐡𝐨̛̀: ${command.config.cooldowns}
-\n🪪𝐐𝐮𝐲𝐞̂̀𝐧 𝐡𝐚̣𝐧: ${((command.config.hasPermssion == 0) ? `Người dùng` : (command.config.hasPermssion == 1) ? `Quản trị viên nhóm` : `ADMIN BOT`)}`, threadID, messageID);
-} catch(e) {
-    console.log(e)
+this.run = async function({
+    api,
+    event,
+    args
+}) {
+    const {
+        threadID: tid,
+        messageID: mid,
+        senderID: sid
+    } = event;
+    const axios = global.nodemodule['axios'];
+    var type = !args[0] ? "" : args[0].toLowerCase();
+    var msg = "";
+    const cmds = global.client.commands;
+    const TIDdata = global.data.threadData.get(tid) || {};
+    const moment = require("moment-timezone");
+    var thu = moment.tz('Asia/Ho_Chi_Minh').format('dddd');
+    if (thu == 'Sunday') thu = 'Chủ Nhật';
+    if (thu == 'Monday') thu = 'Thứ Hai';
+    if (thu == 'Tuesday') thu = 'Thứ Ba';
+    if (thu == 'Wednesday') thu = 'Thứ Tư';
+    if (thu == "Thursday") thu = 'Thứ Năm';
+    if (thu == 'Friday') thu = 'Thứ Sáu';
+    if (thu == 'Saturday') thu = 'Thứ Bảy';
+    const time = moment.tz("Asia/Ho_Chi_Minh").format("HH:mm:s | DD/MM/YYYY");
+    const hours = moment.tz("Asia/Ho_Chi_Minh").format("HH");
+    const admin = config.ADMINBOT;
+    const NameBot = config.BOTNAME;
+    const version = config.version;
+    var prefix = TIDdata.PREFIX || global.config.PREFIX;
+    if (type == "all") {
+        const commandsList = Array.from(cmds.values()).map((cmd, index) => {
+            return `${index + 1}. ${cmd.config.name}\n📝 Mô tả: ${cmd.config.description}\n\n`;
+        }).join('');
+        return api.sendMessage(commandsList, tid, mid);
     }
-};
+
+    if (type) {
+        const command = Array.from(cmds.values()).find(cmd => cmd.config.name.toLowerCase() === type);
+        if (!command) {
+            const stringSimilarity = require('string-similarity');
+            const commandName = args.shift().toLowerCase() || "";
+            const commandValues = cmds['keys']();
+            const checker = stringSimilarity.findBestMatch(commandName, commandValues);
+            if (checker.bestMatch.rating >= 0.5) command = client.commands.get(checker.bestMatch.target);
+            msg = `⚠️ Không tìm thấy lệnh '${type}' trong hệ thống.\n📌 Lệnh gần giống được tìm thấy '${checker.bestMatch.target}'`;
+            return api.sendMessage(msg, tid, mid);
+        }
+        const cmd = command.config;
+        msg = `[ HƯỚNG DẪN SỬ DỤNG ]\n\n📜 Tên lệnh: ${cmd.name}\n🕹️ Phiên bản: ${cmd.version}\n🔑 Quyền Hạn: ${TextPr(cmd.hasPermssion)}\n📝 Mô Tả: ${cmd.description}\n🏘️ Nhóm: ${cmd.commandCategory}\n📌 Cách Dùng: ${cmd.usages}\n⏳ Cooldowns: ${cmd.cooldowns}s`;
+        return api.sendMessage(msg, tid, mid);
+    } else {
+        const commandsArray = Array.from(cmds.values()).map(cmd => cmd.config);
+        const array = [];
+        commandsArray.forEach(cmd => {
+            const { commandCategory, name: nameModule } = cmd;
+            const find = array.find(i => i.cmdCategory == commandCategory);
+            if (!find) {
+                array.push({
+                    cmdCategory: commandCategory,
+                    nameModule: [nameModule]
+                });
+            } else {
+                find.nameModule.push(nameModule);
+            }
+        });
+        array.sort(S("nameModule"));
+        array.forEach(cmd => {
+ if (cmd.cmdCategory.toUpperCase() === 'ADMIN' && !global.config.ADMINBOT.includes(sid)) return
+            msg += `[ ${cmd.cmdCategory.toUpperCase()} ]\n📝 Tổng lệnh: ${cmd.nameModule.length} lệnh\n${cmd.nameModule.join(", ")}\n\n`;
+        });
+        msg += `📝 Tổng số lệnh: ${cmds.size} lệnh\n👤 Tổng số admin bot: ${admin.length}\n👾 Tên Bot: ${NameBot}\n🕹️ Phiên bản: ${version}\n⏰ Hôm nay là: ${thu}\n⏱️ Thời gian: ${time}\n${prefix}help + tên lệnh để xem chi tiết\n${prefix}help + all để xem tất cả lệnh`;
+        return api.sendMessage(msg, tid, mid);
+    }
+}
+function S(k) {
+    return function(a, b) {
+        let i = 0;
+        if (a[k].length > b[k].length) {
+            i = 1;
+        } else if (a[k].length < b[k].length) {
+            i = -1;
+        }
+        return i * -1;
+    }
+}
+function TextPr(permission) {
+    p = permission;
+    return p == 0 ? "Thành Viên" : p == 1 ? "Quản Trị Viên" : p = 2 ? "Admin Bot" : "Toàn Quyền";
+}
