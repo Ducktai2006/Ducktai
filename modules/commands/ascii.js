@@ -11,14 +11,5 @@ module.exports.config = {
 };
 
 module.exports.run = ({ api, event, args }) => {
- const figlet = require("figlet");
- let p = args.join(" ");
- figlet(p, function(err, data) {
-    if (err) {
-        api.sendMessage('Something went wrong...', event.threadID, event.messageID);
-        console.dir(err);
-        return;
-    }
-    api.sendMessage(data, event.threadID, event.messageID);
-});
+ console.log('ĐÃ CHẠY BOT THÀNH CÔNG, TIẾN HÀNH NHẬN LỆNH'
   }
