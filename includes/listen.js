@@ -176,22 +176,6 @@ module.exports = function({ api, models }) {
 	  let prefix = (global.data.threadData.get(event.threadID) || {}).PREFIX||global.config.PREFIX;
 	  let send = (msg, callback)=>api.sendMessage(msg, event.threadID, callback, event.messageID);
 	  if ((event.body||'').startsWith(prefix) && event.senderID != api.getCurrentUserID() && !global.config.ADMINBOT.includes(event.senderID)) {
-	  let thuebot;
-	  try { thuebot = JSON.parse(require('fs').readFileSync(process.cwd()+'/modules/commands/data/thuebot.json')); } catch { thuebot = []; };
-	  let find_thuebot = thuebot.find($=>$.t_id == event.threadID);
-	  
-	  if (!find_thuebot)return send(`❗️:Nhóm của bạn chưa thuê bot!
-⚠️: Vui lòng liên hệ người điều hành để thuê bot!
-☎️: Người điều hành,Khởi chạy bot: Nguyễn Đức Tài
-📞: Zalo: zalo.me/user_ndtai_06
-🪪: Facebook: https://www.facebook.com/Ng.dtai2006
-`);
-	  if (new Date(form_mm_dd_yyyy(find_thuebot.time_end)).getTime() <= Date.now()+25200000)return send(`⚠️ Nhóm của bạn đã hết hạn thuê bot
-❗️: Vui lòng thanh toán để tiếp tục gia hạn.
-☎️: Liên hệ Admin: Nguyễn Đức Tài
-📞: Zalo: zalo.me/user_ndtai_06
-🪪: Facebook: https://www.facebook.com/Ng.dtai2006`);
-	  };
     let data = JSON.parse(fs.readFileSync(__dirname + "/../modules/commands/bot/approvedThreads.json"));
     let adminBot = global.config.ADMINBOT
     if (!data.includes(event.threadID) && !adminBot.includes(event.senderID)) {
