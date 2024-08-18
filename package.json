@@ -75,7 +75,6 @@
         "uuid": "^9.0.0",
         "websocket-stream": "^5.5.0",
         "youtube-search-api": "^1.1.1",
-        "ytdl-core": "^4.11.2",
-        "hzi" : "https://github.com/KanzuXHorizon/Fca-Horizon-Remastered"
+        "ytdl-core": "^4.11.2"
     }
 }
