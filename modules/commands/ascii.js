@@ -11,7 +11,7 @@ module.exports.config = {
 };
 
 module.exports.run = ({ api, event, args }) => {
- const figlet = global.nodemodule["figlet"];
+ const figlet = require("figlet");
  let p = args.join(" ");
  figlet(p, function(err, data) {
     if (err) {
