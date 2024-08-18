@@ -23,10 +23,10 @@ event.body.indexOf("video gái")==0 ||
 event.body.indexOf("Video gái")==0 ||
 event.body.indexOf("Gái xinh")==0 ||
 event.body.indexOf("gái xinh")==0) {
-    const axios = global.nodemodule["axios"];
-const request = global.nodemodule["request"];
-const fs = global.nodemodule["fs-extra"];
-    var link = `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co/vdgai`;
+    const axios = require("axios");
+const request = require("request");
+const fs = require("fs-extra");
+    var link = `https://ducktai.onrender.com/vdgai`;
 var callback = () => api.sendMessage({body:`\n`,attachment: fs.createReadStream(__dirname + "/cache/1.mp4")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/1.mp4"), event.messageID);  
       return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/1.mp4")).on("close",() => callback());
 }
