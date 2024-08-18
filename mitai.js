@@ -17,7 +17,7 @@ const path = require("path");
 const chalk = require("chalk");
 const getIP = require('ipware')().get_ip;
 const requestIp = require('request-ip');
-const PORT = process.env.PORT || 7263;
+const PORT = 8300;
 
 function randomColor() {
     var color = "";
@@ -379,7 +379,6 @@ function onBot({ models }) {
                                 else global.configModule[event.config.name][_0x5beea0] = event.config.envConfig[_0x5beea0] || '';
                                 if (typeof global.config[event.config.name][_0x5beea0] == 'undefined') global.config[event.config.name][_0x5beea0] = event.config.envConfig[_0x5beea0] || '';
                             }
-                            //logger.loader(global.getText('mirai', 'loadedConfig', event.config.name));
                         } catch (error) {
                             throw new Error(global.getText('mitai', 'loadedConfig', event.config.name, JSON.stringify(error)));
                         }
@@ -391,7 +390,6 @@ function onBot({ models }) {
                             throw new Error(global.getText('mitai', 'cantOnload', event.config.name, JSON.stringify(error)), 'error');
                         }
                         global.client.events.set(event.config.name, event);
-                        //logger.loader(global.getText('mirai', 'successLoadModule', event.config.name));
                     } catch (error) {
                         logger.loader(global.getText('mitai', 'failLoadModule', event.config.name, error), 'error');
                     }
@@ -437,7 +435,7 @@ function onBot({ models }) {
         botData.models = models
         onBot(botData);
     } catch (error) {
-        logger(global.getText('mirai', 'successConnectDatabase', JSON.stringify(error)), '[ DATA ] ');
+        logger(global.getText('mitai', 'successConnectDatabase', JSON.stringify(error)), '[ DATA ] ');
     }
     logger('Không thể tải dữ liệu người dùng và nhóm', error)
 })();
