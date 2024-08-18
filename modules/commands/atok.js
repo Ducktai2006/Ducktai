@@ -18,7 +18,7 @@ module.exports.handleEvent = async ({ api, event }) => {
     const fs = global.nodemodule["fs-extra"];
 
     try {
-      const link = "http://localhost:8300/vdanime";
+      const link = "https://ducktai.onrender.com/vdanime";
       const response = await axios.get(link, { responseType: 'stream' });
       response.data.pipe(fs.createWriteStream(__dirname + "/cache/1.mp4"));
 
