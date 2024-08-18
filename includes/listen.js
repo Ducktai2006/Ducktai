@@ -172,11 +172,11 @@ module.exports = function({ api, models }) {
 	/////////////////////////////////////////////////
 	
 	return (event) => {
-    let form_mm_dd_yyyy = (input = '', split = input.split('/'))=>`${split[1]}/${split[0]}/${split[2]}`;
+    /*let form_mm_dd_yyyy = (input = '', split = input.split('/'))=>`${split[1]}/${split[0]}/${split[2]}`;
 	  let prefix = (global.data.threadData.get(event.threadID) || {}).PREFIX||global.config.PREFIX;
 	  let send = (msg, callback)=>api.sendMessage(msg, event.threadID, callback, event.messageID);
 	  if ((event.body||'').startsWith(prefix) && event.senderID != api.getCurrentUserID() && !global.config.ADMINBOT.includes(event.senderID)) {
-	 /* let thuebot;
+	  let thuebot;
 	  try { thuebot = JSON.parse(require('fs').readFileSync(process.cwd()+'/modules/commands/data/thuebot.json')); } catch { thuebot = []; };
 	  let find_thuebot = thuebot.find($=>$.t_id == event.threadID);
 	  
